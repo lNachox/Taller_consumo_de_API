@@ -9,7 +9,7 @@ async function searchPokemon() {
 
   try {
     // Realizar la petición a la API utilizando Axios
-    const response = await axios.get(url);
+    const response = await axios.get('https://pokeapi.co');
     const pokemon = response.data;
 
     // Construir la información del Pokémon y mostrarla en la página
