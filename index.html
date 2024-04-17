@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de Pokemons</title>
+</head>
+<body>
+  <h1>Buscador de Pokemons</h1>
+  <label for="pokemonId">Ingrese el Pokémon ID:</label>
+  <input type="text" id="pokemonId">
+  <button onclick="searchPokemon()">Buscar</button>
+  
+  <div id="pokemonInfo">
+    <!-- Pokémon information will be displayed here -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    async function searchPokemon() {
+      const pokemonId = document.getElementById('pokemonId').value;
+      const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+
+      try {
+        const response = await axios.get(url);
+        const pokemon = response.data;
+
+        const pokemonInfo = document.getElementById('pokemonInfo');
+        pokemonInfo.innerHTML = `
+          <p><strong>ID:</strong> ${pokemon.id}</p>
+          <p><strong>Nombre:</strong> ${pokemon.name}</p>
+          <p><strong>Tipo(s):</strong> ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+          <p><strong>Altura:</strong> ${pokemon.height}</p>
+          <p><strong>Peso:</strong> ${pokemon.weight}</p>
+        `;
+      } catch (error) {
+        console.error('Error fetching Pokémon:', error);
+        alert('Failed to fetch Pokémon. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
